@@ -1,27 +1,27 @@
-'use client'
+"use client";
 
-import { signIn } from 'next-auth/react'
-import { useState } from 'react'
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 export default function SignIn() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await signIn('google', { callbackUrl: '/' })
+      await signIn("google", { callbackUrl: "/" });
     } catch (error) {
-      console.error('Sign in error:', error)
-      setIsLoading(false)
+      console.error("Sign in error:", error);
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] px-4">
+      <div className="max-w-md w-full space-y-8 p-8 bg-[#1a1a1a] border border-gray-800 rounded-lg shadow-xl">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900">Todo App</h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <h2 className="text-3xl font-bold text-white">Todo App</h2>
+          <p className="mt-2 text-sm text-gray-400">
             Sign in to manage your tasks
           </p>
         </div>
@@ -29,7 +29,7 @@ export default function SignIn() {
           <button
             onClick={handleSignIn}
             disabled={isLoading}
-            className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex justify-center items-center gap-3 py-3 px-4 border border-gray-700 rounded-md shadow-sm bg-[#2a2a2a] text-sm font-medium text-gray-300 hover:bg-[#3a3a3a] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-[#1a1a1a] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -49,10 +49,10 @@ export default function SignIn() {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            {isLoading ? 'Signing in...' : 'Sign in with Google'}
+            {isLoading ? "Signing in..." : "Sign in with Google"}
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }
