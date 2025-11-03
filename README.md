@@ -71,6 +71,43 @@ GOOGLE_CLIENT_SECRET="your-google-client-secret"
 - `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`: Get from Google Cloud Console
 
 ### 4. Set Up Google OAuth
+## Deployment
+
+### Option A: Vercel + Neon (Recommended)
+
+1. Push this repo to GitHub.
+2. Create a Postgres database on Neon (or Supabase/Railway). Copy the connection string in Prisma format, e.g.:
+   `postgresql://USER:PASSWORD@HOST/DB?sslmode=require`
+3. In Vercel → Import Project → Connect your GitHub repo.
+4. Set Environment Variables in Vercel:
+   - `DATABASE_URL`
+   - `NEXTAUTH_URL` = your deployed URL, e.g. `https://your-app.vercel.app`
+   - `NEXTAUTH_SECRET` = generate one: `openssl rand -base64 32`
+   - `GOOGLE_CLIENT_ID`
+   - `GOOGLE_CLIENT_SECRET`
+5. Deploy the project.
+6. Initialize the database schema (one-time): run locally with the same `DATABASE_URL`:
+   ```bash
+   DATABASE_URL="postgresql://..." npx prisma db push
+   ```
+7. In Google Cloud Console, set the OAuth Redirect URI to:
+   `https://your-app.vercel.app/api/auth/callback/google`.
+
+### Option B: Netlify + Neon
+
+1. Keep the included `netlify.toml`.
+2. Netlify → Add new site from Git.
+3. Set the same Environment Variables as above (use your Netlify URL for `NEXTAUTH_URL`).
+4. Deploy, then run:
+   ```bash
+   DATABASE_URL="postgresql://..." npx prisma db push
+   ```
+5. Update Google OAuth Redirect URI to:
+   `https://your-site.netlify.app/api/auth/callback/google`.
+
+Notes:
+- Prisma Client will be generated during `postinstall` and `build`.
+- For production, ensure your database URL uses SSL (e.g., `sslmode=require`).
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select an existing one
