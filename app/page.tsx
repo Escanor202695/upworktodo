@@ -33,10 +33,11 @@ export default function Home() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    // Only redirect if we're sure the session is unauthenticated (not just loading)
+    if (status === "unauthenticated" && !loading) {
       router.push("/auth/signin");
     }
-  }, [status, router]);
+  }, [status, loading, router]);
 
   useEffect(() => {
     if (status === "authenticated") {
